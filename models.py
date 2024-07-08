@@ -12,7 +12,7 @@ class Todo(Base):
     content = Column(String, nullable=False, unique=True)
     status = Column(Enum(TodoStatus), nullable=False, default=TodoStatus.WAITING)
     created_at = Column(DateTime, default=datetime.now())
-    updated_at = Column(DateTime, default=datetime.now())
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
 
     user = relationship("User", back_populates="todos")
@@ -26,6 +26,6 @@ class User(Base):
     password = Column(String, nullable=False)
     salt = Column(String, nullable=False)
     created_at = Column(DateTime, default=datetime.now())
-    updated_at = Column(DateTime, default=datetime.now())
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
 
     todos = relationship("Todo", back_populates="user")
