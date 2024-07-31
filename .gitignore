@@ -1,8 +1,9 @@
 .env
 
-env/
 __pycache__/
 
 todo.db
 migrations/
 alembic.ini
+
+my-memo.txt
