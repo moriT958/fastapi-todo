@@ -1,6 +1,5 @@
 from fastapi import FastAPI
-from routers import auth
-
+from routers import todo
 
 app = FastAPI()
 
@@ -8,5 +7,4 @@ app = FastAPI()
 async def route():
     return {"Hello,": "TodoApp!!!"}
 
-app.include_router(auth.router)
-# app.include_router()
+app.include_router(todo.router)

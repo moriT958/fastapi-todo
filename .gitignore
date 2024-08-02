@@ -6,4 +6,6 @@ todo.db
 migrations/
 alembic.ini
 
+docker/
+
 my-memo.txt
