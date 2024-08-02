@@ -1,6 +1,0 @@
-学習用のメモ
-
-次回Dockerで環境構築とDBマイグレーションから始める
-DB : postgresで構築
-
-APIの構築README見ながら進める
