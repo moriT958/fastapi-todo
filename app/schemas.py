@@ -13,8 +13,9 @@ from pydantic import BaseModel, Field
 class TodoCreate(BaseModel):
     title: str = Field(min_length=1, max_length=20, examples=["部屋の片付け"])
 
-class TodoUpdate(BaseModel):
-    title: Optional[str] = Field(None, min_length=1, max_length=20, examples=["部屋の片付け"])
+class TodoUpdate(BaseModel): 
+    # 更新できるのはステータスのみに変更
+    # title: Optional[str] = Field(None, min_length=1, max_length=20, examples=["部屋の片付け"])
     status: Optional[TodoStatus] = Field(None, examples=[TodoStatus.ON_PROC])
 
 class TodoResponse(BaseModel):
