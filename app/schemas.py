@@ -9,7 +9,6 @@ class TodoStatus(Enum):
     ON_PROC = "ON_PROC"
     COMPLETED = "COMPLETED"
 
-from pydantic import BaseModel, Field
 class TodoCreate(BaseModel):
     title: str = Field(min_length=1, max_length=20, examples=["部屋の片付け"])
 
