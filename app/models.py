@@ -13,19 +13,19 @@ class Todo(Base):
     status = Column(Enum(TodoStatus), nullable=False, default=TodoStatus.WAITING)
     created_at = Column(DateTime, default=datetime.now())
     updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
-    # user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
 
-    # user = relationship("User", back_populates="todos")
+    user = relationship("User", back_populates="todos")
 
 
-# class User(Base):
-#     __tablename__ = "users"
+class User(Base):
+    __tablename__ = "users"
 
-#     id = Column(Integer, primary_key=True, autoincrement=True)
-#     username = Column(String, nullable=False)
-#     password = Column(String, nullable=False)
-#     salt = Column(String, nullable=False)
-#     created_at = Column(DateTime, default=datetime.now())
-#     updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    username = Column(String, nullable=False, unique=True)
+    password = Column(String, nullable=False)
+    salt = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.now())
+    updated_at = Column(DateTime, default=datetime.now(), onupdate=datetime.now())
 
-#     todos = relationship("Todo", back_populates="user")
+    todos = relationship("Todo", back_populates="user")
