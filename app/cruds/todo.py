@@ -5,24 +5,25 @@ from schemas import TodoCreate, TodoUpdate
 
 
 # READ
-def get_all_todos(db: Session) -> List[Todo]:
-    return db.query(Todo).all()
+def get_all_todos(db: Session, user_id: int) -> List[Todo]:
+    return db.query(Todo).filter(Todo.user_id==user_id).all()
 
-def get_todo_by_id(db: Session, id: int) -> Optional[Todo]:
-    return db.query(Todo).filter(Todo.id==id).first()
+def get_todo_by_id(db: Session, id: int, user_id: int) -> Optional[Todo]:
+    return db.query(Todo).filter(Todo.id==id).filter(Todo.user_id==user_id).first()
 
 # CREATE
-def create_todo(db: Session, todo_create: TodoCreate) -> Todo:
+def create_todo(db: Session, todo_create: TodoCreate, user_id: int) -> Todo:
     new_todo = Todo(
-        **todo_create.model_dump()
+        **todo_create.model_dump(),
+        user_id=user_id
     )
     db.add(new_todo)
     db.commit()
     return new_todo
 
 # UPDATE
-def update_todo(db: Session, id: int, todo_update: TodoUpdate) -> Optional[Todo]:
-    updating_todo = get_todo_by_id(db, id)
+def update_todo(db: Session, id: int, todo_update: TodoUpdate, user_id: int) -> Optional[Todo]:
+    updating_todo = get_todo_by_id(db, id, user_id)
     if updating_todo is None:
         return None
     # updating_todo.title = updating_todo.title if todo_update.title is None else todo_update.title
@@ -33,8 +34,8 @@ def update_todo(db: Session, id: int, todo_update: TodoUpdate) -> Optional[Todo]
 
 
 # DELETE
-def delete_todo(db: Session, id: int) -> Optional[Todo]:
-    deleting_todo = get_todo_by_id(db, id)
+def delete_todo(db: Session, id: int, user_id: int) -> Optional[Todo]:
+    deleting_todo = get_todo_by_id(db, id, user_id)
     if deleting_todo is None:
         return None
     db.delete(deleting_todo)
