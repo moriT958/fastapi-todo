@@ -1,7 +1,8 @@
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, AfterValidator
 from enum import Enum
 from datetime import datetime
-from typing import Optional
+from typing import Optional, Annotated
+import re
 
 
 class TodoStatus(Enum):
@@ -28,10 +29,25 @@ class TodoResponse(BaseModel):
 
 
 # 認証で使うスキーマ型
+
+# パスワードのバリデーションに使う型
+def validate_password(value: str):
+    if not re.search(r'[A-Z]', value):
+        raise ValueError('Password must contain at least one uppercase letter.')
+    if not re.search(r'[a-z]', value):
+        raise ValueError('Password must contain at least one lowercase letter.')
+    if not re.search(r'[0-9]', value):
+        raise ValueError('Password must contain at least one digit.')
+    if not re.search(r'[!@#$%^&*(),.?":{}|<>]', value):
+        raise ValueError('Password must contain at least one special character.')
+    return value
+
+Password = Annotated[str, AfterValidator(validate_password)]
+
 # 新規ユーザを作成するときのリクエストボディの型
 class UserCreate(BaseModel):
     username: str = Field(min_length=1, examples=["user1"])
-    password: str = Field(min_length=8, examples=["password"])
+    password: Password = Field(min_length=8, examples=["password"])
 
 
 # サーバが返すユーザレスポンスの型
@@ -41,9 +57,6 @@ class UserResponse(BaseModel):
     created_at: datetime
     updated_at: datetime
 
-    # python側でこのスキーマに対応するインスタンスを作成する際、インスタンス化に用いた
-    # クラスが持つ属性からインスタンスに与えることができる。
-    # 通常のpydanticは辞書やkwargsからしか与えることができない。
     model_config = ConfigDict(from_attributes=True)
 
 

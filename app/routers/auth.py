@@ -4,8 +4,10 @@ from starlette import status
 from typing import Annotated
 from sqlalchemy.orm import Session
 from datetime import timedelta
+import re
 
 from database import get_db
+from models import User
 from schemas import UserCreate, UserResponse, Token
 from cruds import auth as auth_cruds
 
@@ -17,6 +19,15 @@ dbDep = Annotated[Session, Depends(get_db)]
 
 @router.post("/signup", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def create_user(db: dbDep, user_create: UserCreate):
+
+    # ユーザ名の検証
+    if db.query(User).filter(User.username==user_create.username).first():
+        raise HTTPException(400, "already registered.")
+
+    # # パスワードの検証
+    # if not re.search(r"\d", user_create.password) or not re.search(r"[!@#$%^&*(),.?\":{}|<>]", user_create.password):
+    #     raise HTTPException(400, "password should have number and signs.")
+
     return auth_cruds.create_user(db, user_create)
 
 
