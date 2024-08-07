@@ -1,7 +1,7 @@
 # FastAPIの練習
 
 ## 目標
-todo機能と認証機能を持ったAPIを作る。pytestを使ってテストコード書く。
+todo機能と認証機能を持ったAPIを作る。テストコードまで書く。
 
 ## todo機能:v0
 GET /todos : Todoリストの一覧を表示  
