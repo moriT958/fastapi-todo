@@ -9,3 +9,4 @@ alembic.ini
 docker/postgres/pgdata/
 
 my-memo.txt
+app/test_user.txt
