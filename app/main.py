@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from routers import todo, auth
 from fastapi.middleware.cors import CORSMiddleware
 
+
 app = FastAPI()
 
 app.add_middleware(

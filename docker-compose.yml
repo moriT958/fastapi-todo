@@ -3,11 +3,11 @@ services:
     image: postgres:15
     container_name: postgres
     volumes:
-      - ./docker/postgres/init.d:/docker-entrypoint-initdb.d
-      - ./docker/postgres/pgdata:/var/lib/postgresql/data
+      - ./init_db.d:/docker-entrypoint-initdb.d
+      - ./docker/pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    env_file:
+    env_file:  
       - .env
 
   app:
@@ -21,3 +21,5 @@ services:
       - 8000:8000
     depends_on:
       - db
+    env_file:  
+      - .env
