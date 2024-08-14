@@ -12,5 +12,9 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
+@app.get("/")
+async def route():
+    return {"Hello": "World!!!"}
+
 app.include_router(todo.router)
 app.include_router(auth.router)
