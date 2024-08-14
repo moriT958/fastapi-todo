@@ -3,7 +3,8 @@
 __pycache__/
 .pytest_cache
 
-docker/pgdata/
+db/pg_data/*
+db/pg_init/init_db.sql
 
 my-memo.txt
 app/test_user.txt

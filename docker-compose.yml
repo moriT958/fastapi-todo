@@ -3,17 +3,20 @@ services:
     image: postgres:15
     container_name: postgres
     volumes:
-      - ./init_db.d:/docker-entrypoint-initdb.d
-      - ./docker/pgdata:/var/lib/postgresql/data
+      - ./db/pg_init:/docker-entrypoint-initdb.d
+      - ./db/pg_data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-    env_file:  
-      - .env
+    environment:  
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=todo_db
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
 
   app:
     build: 
       context: .  # ビルド時のローカルのコンテキスト
-      dockerfile: ./app/Dockerfile
+      dockerfile: ./app/Dockerfile.dev
     volumes:
       - ./app:/app
     command: uvicorn main:app --reload --host 0.0.0.0 --port 8000
@@ -22,4 +25,4 @@ services:
     depends_on:
       - db
     env_file:  
-      - .env
+      - ./app/.env
