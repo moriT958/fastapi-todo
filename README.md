@@ -10,3 +10,6 @@ DELETE /todos/{id} : Todoを削除
 ## ユーザー認証
 POST /auth/signin : 新規ユーザーの登録  
 POST /auth/login : トークン方式のログイン
+
+## その他
+GET /docs : SwaggerUIのドキュメント
