@@ -13,6 +13,11 @@ def get_todo_by_id(db: Session, id: int, user_id: int) -> Optional[Todo]:
 
 # CREATE
 def create_todo(db: Session, todo_create: TodoCreate, user_id: int) -> Todo:
+    # すでに村座いる場合はNoneを返す
+    existing_todo = db.query(Todo).filter(Todo.user_id == user_id, Todo.title == todo_create.title).first()
+    if existing_todo:
+        return None
+
     new_todo = Todo(
         **todo_create.model_dump(),
         user_id=user_id
