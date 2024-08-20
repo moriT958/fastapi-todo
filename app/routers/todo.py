@@ -31,7 +31,10 @@ async def get_todo_by_id(db: dbDep, user: userDep, id: int=Path(gt=0)):
 # 新規のTodoを作成
 @router.post('/', response_model=TodoResponse, status_code=status.HTTP_201_CREATED)
 async def create_todo(db: dbDep, todo_create: TodoCreate, user: userDep):
-    return todo_cruds.create_todo(db, todo_create, user.user_id)
+    created_todo = todo_cruds.create_todo(db, todo_create, user.user_id)
+    if not created_todo:
+        raise HTTPException(status_code=400, detail="This Todo is already exits")
+    return created_todo
 
 
 # Todoの内容を変更
