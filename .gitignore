@@ -8,3 +8,5 @@ db/pg_init/init_db.sql
 
 my-memo.txt
 app/test_user.txt
+
+.DS_Store
