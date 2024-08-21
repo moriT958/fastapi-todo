@@ -1,0 +1,28 @@
+name: ci
+
+# このワークフローがいつ実行されるかを定義
+on:
+  push:
+    branches: main
+
+jobs:
+  # テストジョブ
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install deps
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          pytest
