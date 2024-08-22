@@ -5,9 +5,6 @@ on:
   push:
     branches: main
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true
-
 jobs:
   # テストジョブ
   test:
@@ -24,7 +21,7 @@ jobs:
       - name: Install deps
         run: |
           pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r app/requirements.txt
 
       - name: Run tests
         run: |
