@@ -27,5 +27,4 @@ jobs:
         env: 
           SECRET_KEY: test
           SQLALCHEMY_DATABASE_URL: sqlite://
-        run: |
-          pytest
+        run: pytest
