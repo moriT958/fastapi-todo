@@ -12,6 +12,6 @@ POST /auth/signin : 新規ユーザーの登録
 POST /auth/login : トークン方式のログイン
 
 ## その他
-GET / : Hello, World! 
-GET /docs : SwaggerUIのドキュメント 
+GET / : Hello, World!  
+GET /docs : SwaggerUIのドキュメント  
 GET /redoc : ドキュメント
