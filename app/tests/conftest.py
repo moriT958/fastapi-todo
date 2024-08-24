@@ -12,17 +12,18 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy.pool import StaticPool
 
-from main import app
-from models import Base, Todo
-from schemas import DecodedToken
-from database import get_db
-from cruds.auth import get_current_user
-
 
 app_dir = os.path.join(os.path.dirname(__file__), "..")
 sys.path.append(
     app_dir
 )  # sys.pathは、Pythonがモジュール検索時に使用するパスのリスト(mainをimportするために必要)
+
+
+from main import app
+from models import Base, Todo
+from schemas import DecodedToken
+from database import get_db
+from cruds.auth import get_current_user
 
 
 # 擬似セッションの設定
