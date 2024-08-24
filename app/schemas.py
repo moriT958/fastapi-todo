@@ -10,13 +10,14 @@ class TodoStatus(Enum):
     ON_PROC = "ON_PROC"
     COMPLETED = "COMPLETED"
 
+
 class TodoCreate(BaseModel):
     title: str = Field(min_length=1, max_length=20, examples=["部屋の片付け"])
 
-class TodoUpdate(BaseModel): 
-    # 更新できるのはステータスのみに変更
-    # title: Optional[str] = Field(None, min_length=1, max_length=20, examples=["部屋の片付け"])
+
+class TodoUpdate(BaseModel):
     status: Optional[TodoStatus] = Field(None, examples=[TodoStatus.ON_PROC])
+
 
 class TodoResponse(BaseModel):
     id: int = Field(gt=0, examples=[1])
@@ -30,19 +31,22 @@ class TodoResponse(BaseModel):
 
 # 認証で使うスキーマ型
 
+
 # パスワードのバリデーションに使う型
 def validate_password(value: str):
-    if not re.search(r'[A-Z]', value):
-        raise ValueError('Password must contain at least one uppercase letter.')
-    if not re.search(r'[a-z]', value):
-        raise ValueError('Password must contain at least one lowercase letter.')
-    if not re.search(r'[0-9]', value):
-        raise ValueError('Password must contain at least one digit.')
+    if not re.search(r"[A-Z]", value):
+        raise ValueError("Password must contain at least one uppercase letter.")
+    if not re.search(r"[a-z]", value):
+        raise ValueError("Password must contain at least one lowercase letter.")
+    if not re.search(r"[0-9]", value):
+        raise ValueError("Password must contain at least one digit.")
     if not re.search(r'[!@#$%^&*(),.?":{}|<>]', value):
-        raise ValueError('Password must contain at least one special character.')
+        raise ValueError("Password must contain at least one special character.")
     return value
 
+
 Password = Annotated[str, AfterValidator(validate_password)]
+
 
 # 新規ユーザを作成するときのリクエストボディの型
 class UserCreate(BaseModel):

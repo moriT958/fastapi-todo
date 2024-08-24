@@ -1,0 +1,8 @@
+[flake8]
+max-line-length = 88
+extend-ignore = E203
+
+exclude =
+    # 無視するファイルやフォルダをカンマ区切りで指定
+    migrations/,
+    tests/test_utils.py,
