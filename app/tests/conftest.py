@@ -1,13 +1,10 @@
-'''
+"""
 fixtureの定義ファイル
 fixture: テストの前処理(DBセットアップ、モック作成など)のためのpytestの機能
-'''
+"""
+
 import os
 import sys
-
-app_dir = os.path.join(os.path.dirname(__file__), "..")
-sys.path.append(app_dir)# sys.pathは、Pythonがモジュール検索時に使用するパスのリスト(mainをimportするために必要)
-
 
 import pytest
 from fastapi.testclient import TestClient
@@ -22,14 +19,18 @@ from database import get_db
 from cruds.auth import get_current_user
 
 
+app_dir = os.path.join(os.path.dirname(__file__), "..")
+sys.path.append(
+    app_dir
+)  # sys.pathは、Pythonがモジュール検索時に使用するパスのリスト(mainをimportするために必要)
+
+
 # 擬似セッションの設定
 @pytest.fixture()
 def session_fixture():
     # 擬似セッションの生成
     engine = create_engine(
-        url="sqlite://",
-        connect_args={"check_same_thread": False},
-        poolclass=StaticPool
+        url="sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool
     )
     Base.metadata.create_all(engine)
     SessionLocal = sessionmaker(autoflush=False, autocommit=False, bind=engine)
@@ -57,10 +58,10 @@ def user_fixture():
 def client_fixture(session_fixture: Session, user_fixture: DecodedToken):
     def override_get_db():
         return session_fixture
-    
+
     def override_get_current_user():
         return user_fixture
-    
+
     app.dependency_overrides[get_db] = override_get_db
     app.dependency_overrides[get_current_user] = override_get_current_user
 
