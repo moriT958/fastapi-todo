@@ -24,7 +24,8 @@ jobs:
 
       - name: Format code
         run: |
-          black app
+          cd app
+          black .
 
   # PEP8のチェック
   lint:
@@ -44,7 +45,8 @@ jobs:
 
       - name: Lint code
         run: |
-          flake8 app
+          cd app
+          flake8
 
   # テストジョブ
   test:
