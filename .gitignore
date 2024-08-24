@@ -3,6 +3,8 @@
 __pycache__/
 .pytest_cache
 
+app/.flake8
+
 db/pg_data/*
 db/pg_init/init_db.sql
 
